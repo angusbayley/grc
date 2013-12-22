@@ -15,7 +15,7 @@
 
 window.onload=function() {
 
-    var coeff = 1;
+    var coeff = 0;
 
     $(".radio").click(function(event) {
         if($(event.target).is('#button1')) {
@@ -62,7 +62,40 @@ window.onload=function() {
             units = "mph";
         }
     });
-            
+    
+    // INTRO MESSAGE \\
+
+    $(".radio").click(function() {
+        $("#introMessage").animate({top: "150px"}, 1000, function(){})
+        .fadeTo(500, 0, function() {
+            $("#introWords").html("enter some gear sizes (at least 1 chainring & 1 sprocket)");
+            $(this).fadeTo(500, 0.6);
+        })
+        .dequeue();
+    });
+
+    $("input").change(function() {
+        switch (coeff) {
+            case 1:
+                var top = 270;
+                break;
+            case 2:
+                var top = 425;
+                break;
+            case 3: 
+                var top = 370;
+                break;
+        }
+        $("#introMessage").animate({top: top+"px"}, 1000, function(){})
+        .fadeTo(500, 0, function() {
+            $("#introWords").html("when you're ready, hit calculate");
+            $(this).fadeTo(500, 0.6);
+        })
+        .dequeue();
+    });
+
+
+
     // SLIDERS \\
 
     var crankLength = 160;
@@ -109,8 +142,16 @@ window.onload=function() {
     var tempFronts = [];
 
     //Copy & paste from this line onwards in George's version:
-    $( "#calculateThis" ).click(function(){            // now activates script on push of calculate button
-
+    $( "#calculateThis" ).click(function(){
+        if ($('#introMessage').length) {
+            $('#introMessage').fadeTo(100,0, function() {
+                $(this).remove();
+                $('#resultsStack').fadeTo(300,0.9);
+            });
+        }
+        else {
+            $('#resultsStack').fadeTo(300,0.9);
+        }
         var frontGears = [];                           // creates empty arrays for final front and back gears
         var rearGears = [];
         var front = [];                                // creates empty array to fill with values from inputs
@@ -845,10 +886,11 @@ function fullCalc(a,b) {                                  // a = front, b = back
 
     $( "#save" ).click(function(){
         $('#resultsStack').clone()
+            .css("opacity", "0")
             .attr("class", "stack")
             .attr("id", "newStack")
             .insertAfter('#resultsStack');
-        $('#newStack').fadeTo(300, 0.7, function() {
+        $('#newStack').fadeTo(300, 0.6, function() {
             $('#newStack').animate({marginLeft: 7}, 1000, function() {
                  $('#newStack').removeAttr("id");
             });

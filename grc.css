@@ -195,14 +195,20 @@ input {
 
 #resultsContainer {
     height: 123px;
+    display: table;
+    width: 100%;
+}
+
+#resultsContainer2 {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    width: 100%;
 }
 
 #result1 {
-    width: 390px;
     display: inline-block;
-    margin: 0 0 0 0px;
     padding: 5px;
-    text-align: center;
 }
 
 #results_chart {

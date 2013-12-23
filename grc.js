@@ -271,7 +271,7 @@ function fullCalc(a,b) {                                  // a = front, b = back
         var tbdy = document.createElement('tbody');        // creates variable for body of table
         tbl.style.width = '100%';                          // sets width
         tbl.setAttribute('border', '0');                   // sets border
-        tbl.setAttribute("id", "result1");                 // sets id to "result1"
+        //tbl.setAttribute("id", "result1");                 // sets id to "result1"
 
         for (var i = 0; i < a.length + 1; i++) {           // creates number of rows length frontGears +1
             var tr = document.createElement('tr');

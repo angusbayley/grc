@@ -68,33 +68,44 @@ window.onload=function() {
     $(".radio").click(function() {
         $("#introMessage").animate({top: "150px"}, 1000, function(){})
         .fadeTo(500, 0, function() {
-            $("#introWords").html("enter some gear sizes (at least 1 chainring & 1 sprocket)");
+            $("#introWords").html("enter some gear sizes (at least 1 chainring, 1 sprocket)");
             $(this).fadeTo(500, 0.6);
         })
         .dequeue();
     });
+
+    var opCount = 0;
 
     $("input").change(function() {
         switch (coeff) {
+            case 0:
+                break;
             case 1:
                 var top = 270;
+                changeTextToCalculate(top);
                 break;
             case 2:
                 var top = 425;
+                changeTextToCalculate(top);
                 break;
             case 3: 
                 var top = 370;
+                changeTextToCalculate(top);
                 break;
         }
-        $("#introMessage").animate({top: top+"px"}, 1000, function(){})
-        .fadeTo(500, 0, function() {
-            $("#introWords").html("when you're ready, hit calculate");
-            $(this).fadeTo(500, 0.6);
-        })
-        .dequeue();
     });
 
-
+    changeTextToCalculate = function(top) {
+        if (opCount==0) {
+            $("#introMessage").animate({top: top+"px"}, 1000, function(){})
+            .fadeTo(500, 0, function() {
+                $("#introWords").html("when you're ready, hit calculate");
+                $(this).fadeTo(500, 0.6);
+            })
+            .dequeue();
+        }
+        opCount ++;
+    }
 
     // SLIDERS \\
 
@@ -325,20 +336,25 @@ function fullCalc(a,b) {                                  // a = front, b = back
         .attr("transform", "translate("+xOff+","+yOff+")");
 
 
+    svg.append("text")
+        .attr("class", "chainrings")
+        .attr("x", 10)
+        .attr("y", -15)
+        .text("Chainrings:");
 
     svg.append("text")
         .attr("class", "keyText")
-        .attr("x", 21)
-        .attr("y", -15)
-        .text("");
-    svg.append("text")
-        .attr("class", "keyText")
-        .attr("x", 100)
+        .attr("x", 101)
         .attr("y", -15)
         .text("");
     svg.append("text")
         .attr("class", "keyText")
         .attr("x", 180)
+        .attr("y", -15)
+        .text("");
+    svg.append("text")
+        .attr("class", "keyText")
+        .attr("x", 260)
         .attr("y", -15)
         .text("");
 
@@ -397,7 +413,7 @@ function fullCalc(a,b) {                                  // a = front, b = back
 
         //updating x axis label
         svg.selectAll(".xAxisLabel")
-            .data(["Gear number (rear)"])
+            .data(["Rear sprocket (no. teeth)"])
             .enter().append("text")
                 .attr("class", "xAxisLabel")
                 .attr("x", w/2)
@@ -486,7 +502,7 @@ function fullCalc(a,b) {                                  // a = front, b = back
             svg.selectAll(".key1").data([tempFronts[0]])
                 .enter().append("rect")
                     .attr("class", "key1")
-                    .attr("x", 0)
+                    .attr("x", 80)
                     .attr("y", -30)
                     .attr("height", 15)
                     .attr("width", 15);
@@ -500,7 +516,7 @@ function fullCalc(a,b) {                                  // a = front, b = back
             svg.selectAll(".key2").data([tempFronts[1]])
                 .enter().append("rect")
                     .attr("class", "key2")
-                    .attr("x", 80)
+                    .attr("x", 160)
                     .attr("y", -30)
                     .attr("height", 15)
                     .attr("width", 15);
@@ -514,7 +530,7 @@ function fullCalc(a,b) {                                  // a = front, b = back
             svg.selectAll(".key3").data([tempFronts[2]])
                 .enter().append("rect")
                     .attr("class", "key3")
-                    .attr("x", 160)
+                    .attr("x", 240)
                     .attr("y", -30)
                     .attr("height", 15)
                     .attr("width", 15);
@@ -890,7 +906,10 @@ function fullCalc(a,b) {                                  // a = front, b = back
             .attr("class", "stack")
             .attr("id", "newStack")
             .insertAfter('#resultsStack');
-        $('#newStack').fadeTo(300, 0.6, function() {
+        $('#newStack').find("rect").removeAttr("onmouseover");
+        $('#newStack').find("text").removeAttr("onmouseover");
+        $('#newStack').find("td").removeAttr("onmouseover");
+        $('#newStack').fadeTo(300, 0.65, function() {
             $('#newStack').animate({marginLeft: 7}, 1000, function() {
                  $('#newStack').removeAttr("id");
             });

@@ -78,10 +78,10 @@ input {
 }
 
 .InputContainer {
-    width: 189px;
+    width: 183px;
     height: 40px;
     position: relative;
-    margin: -19px 0 0 121px;
+    margin: -19px 0 0 127px;
 }
 
 #crankLengthSliderBox {
@@ -95,6 +95,7 @@ input {
     background-color: #FFEDDC;
     color: #f6931f;
     font-weight: bold;
+    margin-bottom: 10px;
     width: 55px;
 }
 
@@ -199,7 +200,7 @@ input {
 #result1 {
     width: 390px;
     display: inline-block;
-    margin: 0 0 0 15px;
+    margin: 0 0 0 0px;
     padding: 5px;
     text-align: center;
 }
@@ -255,6 +256,10 @@ input {
 }
 
 #save {
+    float: left; 
+}
+
+#calculateThis {
     float: right; 
 }
 
@@ -292,8 +297,8 @@ input {
     font-size: 0.8em;
 }
 
-#crankLengthSlider {
-    margin: 10px 2px 10px 2px;
+#results_chart .chainrings {
+    font-size: 0.8em;
 }
 
 .radio {
@@ -424,6 +429,11 @@ input {
     padding: 0 0 0 5px;
     position: absolute;
     bottom: 0;
+    width: 315px;
+}
+
+#footer span {
+    color: red;
 }
 
 #footer a {

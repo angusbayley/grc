@@ -76,8 +76,31 @@ window.onload=function() {
 
     var opCount = 0;
 
-    $("input").change(function() {
-        switch (coeff) {
+    $('#rearGearInputContainer input').change(function() {
+        if ($('#front1').val() != 0||$('#front2').val() != 0||$('#front3').val() != 0) {
+            textChanger(coeff);
+        }
+    });
+
+    var isRearEmpty = true;
+    $('#frontGearInputContainer input').change(function() {
+        if ($('#rear1').val() != "" || $('#rear2').val() != "" || $('#rear3').val() != "" || $('#rear4').val() != "" || $('#rear5').val() != "" || $('#rear6').val() != "" || $('#rear7').val() != "" || $('#rear8').val() != "" || $('#rear9').val() != "" || $('#rear10').val() != "" || $('#rear11').val() != "" || $('#rear12').val() != "") {      // yeah I know... I have to slim this down
+            textChanger(coeff);
+        }
+    });
+
+    // $('#frontGearInputContainer input').change(function() {
+    //     if ($('#rearGearInputContainer input').each(function() {
+    //         if ($(this).val() != "") {
+    //             return true;
+    //         }
+    //     })) {
+    //         textChanger(coeff);
+    //     }
+    // });
+
+    textChanger = function(coeff) {
+         switch (coeff) {
             case 0:
                 break;
             case 1:
@@ -93,7 +116,7 @@ window.onload=function() {
                 changeTextToCalculate(top);
                 break;
         }
-    });
+    }
 
     changeTextToCalculate = function(top) {
         if (opCount==0) {
@@ -207,19 +230,19 @@ window.onload=function() {
     });
 
     // CALCULATIONS \\
- $(function() {    
-    $('#wheelType').change(function(){
-        $('.tyre').hide();
-        $('#wheel' + $(this).val()).show();
+    $(function() {    
+        $('#wheelType').change(function(){
+            $('.tyre').hide();
+            $('#wheel' + $(this).val()).show();
+        });
     });
-});
     
     
-function fullCalc(a,b) {                                  // a = front, b = back
-    var rim = $('#wheelType').val();
-    var wheelType = document.getElementById("wheel"+rim);
-    var wheelRadius = wheelType.options[wheelType.selectedIndex].value/2;
-    var convFac;
+    function fullCalc(a,b) {                                  // a = front, b = back
+        var rim = $('#wheelType').val();
+        var wheelType = document.getElementById("wheel"+rim);
+        var wheelRadius = wheelType.options[wheelType.selectedIndex].value/2;
+        var convFac;
         if (units=="kph") {
             convFac = 3.6;
         }
@@ -227,36 +250,36 @@ function fullCalc(a,b) {                                  // a = front, b = back
             convFac = 2.2369;
         }
         var ratios = new Array (a.length);                    // creates new array with length front
-            for (i=0; i<a.length; i++) {                      // loops through all front chainrings
-             ratios[i] = new Array(b.length);                 // creates array of length rear inside front[i]
-                 for (j=0; j<b.length; j++) {                 // loops over length of rear
-                     switch (coeff) {
-                         case 1:                              // calculate gear ratio
-                             var calc = a[i]/b[j];
-                             break;
-                         case 2:                              // calculate velocity
-                             calc = (rpm/60)*(a[i]/b[j])*2*Math.PI*wheelRadius*convFac;
-                             break;
-                         case 3:                              // calculate gain ratio
-                             calc = (wheelRadius*a[i])/((crankLength/1000)*b[j]);
-                             break;
-                     }
-                     calc = sigFigs(calc, 3);                 // 3sf
-                     var z = isNaN(calc);
+        for (i=0; i<a.length; i++) {                      // loops through all front chainrings
+            ratios[i] = new Array(b.length);                 // creates array of length rear inside front[i]
+            for (j=0; j<b.length; j++) {                 // loops over length of rear
+                switch (coeff) {
+                    case 1:                              // calculate gear ratio
+                        var calc = a[i]/b[j];
+                        break;
+                    case 2:                              // calculate velocity
+                        calc = (rpm/60)*(a[i]/b[j])*2*Math.PI*wheelRadius*convFac;
+                        break;
+                    case 3:                              // calculate gain ratio
+                        calc = (wheelRadius*a[i])/((crankLength/1000)*b[j]);
+                        break;
+                }
+                calc = sigFigs(calc, 3);                 // 3sf
+                var z = isNaN(calc);
                 if (z === true){                              // checks for NaN, infinity or 0 values
                     ratios[i][j] = " ";                       // replaces with " " if found
                 }
-                     else if (calc === Infinity){
-                         ratios[i][j] = " ";
-                     }
-                     else if (calc === 0){
-                         ratios[i][j] = " ";
-                     }
-                    else{
-                     ratios[i][j]=calc; 
-                     }                                       // inserts rounded answer into 2D array
-                 }
+                else if (calc === Infinity){
+                    ratios[i][j] = " ";
+                }
+                else if (calc === 0){
+                    ratios[i][j] = " ";
+                }
+                else{
+                    ratios[i][j]=calc; 
+                }                                       // inserts rounded answer into 2D array
             }
+        }
         return ratios;
     }
 
@@ -266,7 +289,7 @@ function fullCalc(a,b) {                                  // a = front, b = back
     }
 
     function tableCreate(a, b, c) {    
-        $("#result1").fadeOut('fast');    //NEW
+        $(".result1").eq(0).fadeOut('fast');    //NEW
         var tbl = document.createElement('table');         // creates variable for table
         var tbdy = document.createElement('tbody');        // creates variable for body of table
         tbl.style.width = '100%';                          // sets width
@@ -306,7 +329,7 @@ function fullCalc(a,b) {                                  // a = front, b = back
         }
         
         tbl.appendChild(tbdy);
-        $("#result1").hide().html(tbl).fadeIn('slow');   //CHANGE                               // replaces result1 with new table
+        $(".result1").eq(0).hide().html(tbl).fadeIn('slow');   //CHANGE            // replaces result1 with new table
     }
     //End copy & paste from George's version
 
@@ -401,13 +424,13 @@ function fullCalc(a,b) {                                  // a = front, b = back
                 .text(String);
         switch (coeff) {
             case 1: 
-                $('#resultsTitle').html(chosen);
+                $('.resultsTitle').eq(0).html(chosen);
                 break;
             case 2:
-                $('#resultsTitle').html(chosen + " @ " + rpm + " rpm");
+                $('.resultsTitle').eq(0).html(chosen + " @ " + rpm + " rpm");
                 break;
             case 3:
-                $('#resultsTitle').html(chosen + ", " + crankLength + "mm Cranks");
+                $('.resultsTitle').eq(0).html(chosen + ", " + crankLength + "mm Cranks");
                 break;
         }
 
@@ -465,34 +488,34 @@ function fullCalc(a,b) {                                  // a = front, b = back
                         .text(String);             
             break;
             default:                                    // the spacing changed
-                    svg.selectAll("line").remove();                    // LINES
-                    svg.selectAll("line").data(tickArray)
-                        .enter().append("line")                            // all new lines made on old scale
-                            .attr("x1", 0)
-                            .attr("x2", w)
-                            .attr("y1", function(d) {return (yOld(d));})
-                            .attr("y2", function(d) {return (yOld(d));})
-                            .style("stroke", "#ccc")
-                          .transition()
-                            .duration(1000)
-                            .attr("y1", function(d) {return (y(d));})
-                            .attr("y2", function(d) {return (y(d));});
-                    
-                    svg.selectAll(".rule").remove();                   // TICKS
-                    svg.selectAll(".rule").data(tickArray)
-                        .enter().append("text")
-                            .attr("class", "rule")
-                            .attr("y", function(d) {return (yOld(d));})
-                            .attr("x", 0)
-                            .attr("dx", -13)    
-                            .attr("dy", 5)
-                            .attr("text-anchor", "middle")
-                            .attr("font-size", "0.8em")
-                            .text(String)
-                          .transition()
-                            .duration(1000)
-                            .attr("y", function(d) {return (y(d));})
-                            .text(String);
+                svg.selectAll("line").remove();                    // LINES
+                svg.selectAll("line").data(tickArray)
+                    .enter().append("line")                            // all new lines made on old scale
+                        .attr("x1", 0)
+                        .attr("x2", w)
+                        .attr("y1", function(d) {return (yOld(d));})
+                        .attr("y2", function(d) {return (yOld(d));})
+                        .style("stroke", "#ccc")
+                      .transition()
+                        .duration(1000)
+                        .attr("y1", function(d) {return (y(d));})
+                        .attr("y2", function(d) {return (y(d));});
+                
+                svg.selectAll(".rule").remove();                   // TICKS
+                svg.selectAll(".rule").data(tickArray)
+                    .enter().append("text")
+                        .attr("class", "rule")
+                        .attr("y", function(d) {return (yOld(d));})
+                        .attr("x", 0)
+                        .attr("dx", -13)    
+                        .attr("dy", 5)
+                        .attr("text-anchor", "middle")
+                        .attr("font-size", "0.8em")
+                        .text(String)
+                      .transition()
+                        .duration(1000)
+                        .attr("y", function(d) {return (y(d));})
+                        .text(String);
         }
         
 
@@ -872,7 +895,6 @@ function fullCalc(a,b) {                                  // a = front, b = back
         }
     };
 
-
     function HMTicks(numTicks, dRange) {        //HomeMade ticks (No. ticks, data range), makes array of y positions of ticks
         var allowedSpacings = [0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50];
         var spacingOptions = Array();
@@ -900,7 +922,9 @@ function fullCalc(a,b) {                                  // a = front, b = back
         return (output);
     }
 
-    $( "#save" ).click(function(){
+    //SAVING, AND DELETING SAVES\\
+
+    $("#save").click(function(){
         $('#resultsStack').clone()
             .css("opacity", "0")
             .attr("class", "stack")
@@ -909,10 +933,22 @@ function fullCalc(a,b) {                                  // a = front, b = back
         $('#newStack').find("rect").removeAttr("onmouseover");
         $('#newStack').find("text").removeAttr("onmouseover");
         $('#newStack').find("td").removeAttr("onmouseover");
+        $('#newStack').find("h3").after("<span class='fa fa-times fa-lg'></span>");
+        //$('#newStack').find("h3").after("<span class='hi'>hello</span>");
         $('#newStack').fadeTo(300, 0.65, function() {
             $('#newStack').animate({marginLeft: 7}, 1000, function() {
                  $('#newStack').removeAttr("id");
             });
+        });
+    });
+
+    $("#stacks").on("click", ".fa-times", function(){
+        console.log("clicked");
+        console.log($(this).parents(".stack"));
+        $(this).parents(".stack").fadeTo(300, 0, function() {
+            $(this).animate({marginLeft: "-416px"}, function() {
+                $(this).remove();
+            })
         });
     });
 };

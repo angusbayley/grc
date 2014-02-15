@@ -7,10 +7,11 @@
     <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
     <script type="text/javascript" src="grc.js"></script>
     <link rel="stylesheet" type="text/css" href="grc.css"/>
+    <link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.min.css">
 </head>
 <body>
     <div id="leftBar">
-        <h1>Gear Calculator</h1>
+        <h1>Gear Calculator</h1><i class="fa fa-question-circle fa-2x"></i>
         <div id="entries">
             <h3></h3>
             <p>
@@ -22,7 +23,7 @@
             </p>
             <hr/>
             <p>Chainring size (teeth)
-                <div class="gearInputContainer">
+                <div id="frontGearInputContainer">
                     <input id="front1" size="1"></input>
                     <input id="front2" size="1"></input>
                     <input id="front3" size="1"></input>
@@ -30,7 +31,7 @@
                 <br/>
             </p>
             <p>Sprocket size (teeth)
-                <div class="gearInputContainer">
+                <div id="rearGearInputContainer">
                     <input id="rear1"></input>
                     <input id="rear2"></input>
                     <input id="rear3"></input>
@@ -150,7 +151,7 @@
             <button type="button" id="save">Save Current</button><button type="button" id="calculateThis">Calculate</button>
         </div>
         <p id="footer">
-            <span>This tool is still in development</span>. It works best in Chrome and Safari. There are some bugs, and some display issues with Firefox - soon to be fixed.
+            <span>This tool is still in development</span>. It works best in Chrome and Safari. There are some bugs - soon to be fixed.
             <br/><br/>
             Made by <a href="http://www.angusbayley.co.uk">Angus Bayley</a> and <a href="http://www.georgerichardson.net">George Richardson</a>.
         </p>
@@ -166,16 +167,16 @@
     </div>
     <div id="stacks">
         <div class="stack" id="resultsStack">
-            <div id="results_table">
-                <h3>Results: <span id="resultsTitle">Gear Ratio</span></h3>
-                <div id="resultsContainer">
-                    <div id="resultsContainer2">
-                        <div id="result1"></div>
+            <div class="results_table">
+                <h3>Results: <span class="resultsTitle">Gear Ratio</span></h3>
+                <div class="resultsContainer">
+                    <div class="resultsContainer2">
+                        <div class="result1"></div>
                     </div>
                 </div>
             </div>
-            <div id="results_chart">
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="300px">
+            <div class="results_chart">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="300px" width="100%">
                 </svg>
             </div>   
         </div>

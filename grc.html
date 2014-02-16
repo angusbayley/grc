@@ -11,7 +11,15 @@
 </head>
 <body>
     <div id="leftBar">
-        <h1>Gear Calculator</h1><i class="fa fa-question-circle fa-2x"></i>
+        <div id="mouseCapture">
+            <h1>Gear Calculator</h1><i class="fa fa-question-circle fa-2x"></i>
+            <div id="helpDropdown">
+                <div class="helpBoxTriangle"></div>
+                <div class="helpTextContainer">
+                    <span id="what">What is this?</span><span id="walkthrough"/>Walk me through this tool</span>
+                </div>
+            </div>
+        </div>
         <div id="entries">
             <h3></h3>
             <p>
@@ -19,6 +27,26 @@
                     <div id="button1" class="radio">Gear Ratios</div>
                     <div id="button2" class="radio">Velocity</div>
                     <div id="button3" class="radio">Gain Ratios</div>
+                    <div id="explnContainer">
+                        <div class="explnDropdown" id="GearR">
+                            <div class="helpBoxTriangle"></div>
+                            <div class="helpTextContainer">
+                                The gear ratio is the number of turns of the back wheel per cycle of the chainring
+                            </div>
+                        </div>
+                        <div class="explnDropdown" id="speed">
+                            <div class="helpBoxTriangle"></div>
+                            <div class="helpTextContainer">
+                                This is the speed that you achieve for a given sprocket/chainring combination when pedalling at a specified rate (RPM)
+                            </div>
+                        </div>
+                        <div class="explnDropdown" id="GainR">
+                            <div class="helpBoxTriangle"></div>
+                            <div class="helpTextContainer">
+                                The gain ratio is the number of meters the outermost point of the tyre rotates through per meter that the outermost point of the cranks (your feet) move. Think of it as how much your bike is amplifying the movement of your feet
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </p>
             <hr/>

@@ -27,15 +27,6 @@ body {
     white-space: normal;
 }
 
-.fa-question-circle {
-    color: steelblue;
-}
-
-.fa-question-circle:hover {
-    cursor: pointer;
-    color: #386890;
-}
-
 #leftBar {
     height: 100%;
     width: 320px;
@@ -47,17 +38,113 @@ body {
     background-color: white;
 }
 
+#mouseCapture {
+    margin-top: 20px;
+}
+
 h1 {
     padding: 0 0 0 5px;
     display: inline-block;
+    margin-top: 0px;
     margin-right: 35px;
 }
 
-#help {
-    width: 30px;
-    height: 30px;
-    display: inline-block;
-    background-color: red;
+.fa-question-circle {
+    color: steelblue;
+}
+
+.fa-question-circle:hover {
+    cursor: pointer;
+    color: #386890;
+}
+
+#helpDropdown {
+    width: 93%;
+    display: block;
+    position: relative;
+    top: -25px;
+    margin-bottom: -40px;
+    margin-left: auto;
+    margin-right: auto;
+    /*border: 1px dashed steelblue;*/
+    opacity: 0;
+}
+
+.helpBoxTriangle {
+    border-bottom: 13px solid steelblue; 
+    border-right: 13px solid transparent;
+    border-left: 13px solid transparent;
+    width: 0px;
+    margin-bottom: -5px
+}
+
+#helpDropdown .helpBoxTriangle {
+    margin-left: 271px;
+}
+
+#helpDropdown .helpTextContainer {
+    font-size: 0.8em;
+}
+
+.helpTextContainer {
+    background-color: steelblue;
+    border-radius: 10px;
+    color: white;
+    padding: 5px;
+    -moz-box-shadow: 3px 3px 5px 0px #ccc;
+    -webkit-box-shadow: 3px 3px 5px 0px #ccc;
+    box-shadow: 3px 3px 5px 0px #ccc;
+}
+
+#helpDropdown span {
+    padding-left: 15px;
+    padding-right: 15px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#explnContainer {
+    width: 100%;
+    position: relative;
+}
+
+.explnDropdown{
+    width: 93%;
+    display: inline;
+    position: absolute;
+    font-size: 0.9em;
+    left:0;
+    top:0;
+    opacity: 0;
+    z-index: 3;
+}
+
+#GearR .helpBoxTriangle {
+    margin-left: 30px;
+}
+
+#speed .helpBoxTriangle {
+    margin-left: 140px;
+}
+
+#GainR .helpBoxTriangle {
+    margin-left: 250px;
+}
+
+.explnDropdown .helpTextContainer {
+    width: 60%;
+}
+
+#GearR .helpTextContainer {
+    margin-left: 0px;
+}
+
+#speed .helpTextContainer {
+    margin-left: 60px;
+}
+
+#GainR .helpTextContainer {
+    margin-left: 120px;
 }
 
 #entries {
@@ -93,12 +180,14 @@ input {
 #frontGearInputContainer {
     width: 195px;
     position: relative;
+    z-index: 0;
     margin: -29px 0 0 127px;
 }
 
 #rearGearInputContainer {
     width: 195px;
     position: relative;
+    z-index: 1;
     margin: -29px 0 0 127px;
 }
 
@@ -158,7 +247,7 @@ input {
 }
 
 #introMessage {
-    opacity: 0.6;
+    opacity: 0;
     display: inline-block;
     position: relative;
     top: 100px;

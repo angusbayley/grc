@@ -1,4 +1,4 @@
-// JQUERY TEST \\
+// TESTS \\
 //$(document).ready(function() {
 //    $("#footer").append("<p>jQuery is working</p>");
 //});
@@ -11,11 +11,131 @@
 
 //window.onload=jsTest;
 
-//BUTTONS\\
+
+
+// EVERYTHING ELSE \\
 
 window.onload=function() {
 
+
+    // HELP STUFF \\
+
+    var walkthrough = false;
+    $('#walkthrough').click(function() {
+        walkthrough = true;
+        $('#introMessage').fadeTo(300, 0.6);
+    })
+
+    $('.fa-question-circle').mouseenter(function() {
+        $('#helpDropdown').fadeTo(200, 1);
+    });
+
+    $('#mouseCapture').mouseleave(function() {
+        $('#helpDropdown').fadeTo(200, 0);
+    });
+
+
+    // INTRO MESSAGE \\
+
+    $(".radio").click(function() {
+        if (walkthrough == true) {
+            $("#introMessage").animate({top: "150px"}, 1000, function(){})
+            .fadeTo(500, 0, function() {
+                $("#introWords").html("enter some gear sizes (at least 1 chainring, 1 sprocket)");
+                $(this).fadeTo(500, 0.6);
+            })
+            .dequeue();
+        }
+    });
+
+    var opCount = 0;
+
+    $('#rearGearInputContainer input').change(function() {
+        if (walkthrough == true) {
+            if ($('#front1').val() != 0||$('#front2').val() != 0||$('#front3').val() != 0) {
+                textChanger(coeff);
+            }
+        }
+    });
+
+    $('#frontGearInputContainer input').change(function() {
+        if (walkthrough == true) {
+            if ($('#rear1').val() != "" || $('#rear2').val() != "" || $('#rear3').val() != "" || $('#rear4').val() != "" || $('#rear5').val() != "" || $('#rear6').val() != "" || $('#rear7').val() != "" || $('#rear8').val() != "" || $('#rear9').val() != "" || $('#rear10').val() != "" || $('#rear11').val() != "" || $('#rear12').val() != "") {      // yeah I know... I have to slim this down
+                textChanger(coeff);
+            }
+        }
+    });
+
+    // $('#frontGearInputContainer input').change(function() {
+    //     if ($('#rearGearInputContainer input').each(function() {
+    //         if ($(this).val() != "") {
+    //             return true;
+    //         }
+    //     })) {
+    //         textChanger(coeff);
+    //     }
+    // });
+
+    textChanger = function(coeff) {
+         switch (coeff) {
+            case 0:
+                break;
+            case 1:
+                var top = 270;
+                changeTextToCalculate(top);
+                break;
+            case 2:
+                var top = 425;
+                changeTextToCalculate(top);
+                break;
+            case 3: 
+                var top = 370;
+                changeTextToCalculate(top);
+                break;
+        }
+    }
+
+    changeTextToCalculate = function(top) {
+        if (opCount==0) {
+            $("#introMessage").animate({top: top+"px"}, 1000, function(){})
+            .fadeTo(500, 0, function() {
+                $("#introWords").html("when you're ready, hit calculate");
+                $(this).fadeTo(500, 0.6);
+            })
+            .dequeue();
+        }
+        opCount ++;
+    }
+
+
+    // LEFTBAR BUTTONS \\
+
     var coeff = 0;
+
+    $(".radio").mouseenter(function(event) {
+        //$('#explnContainer')
+        if($(event.target).is('#button1')) {
+            console.log("hoverrr");
+            $('#GearR').fadeTo(200, 1);
+        }
+        if($(event.target).is('#button2')) {
+            $('#speed').fadeTo(200, 1);
+        }
+        if($(event.target).is('#button3')) {
+            $('#GainR').fadeTo(200, 1);
+        }
+    });
+    $(".radio").mouseleave(function(event) {
+        if($(event.target).is('#button1')) {
+            $('#GearR').fadeTo(200, 0);
+        }
+        if($(event.target).is('#button2')) {
+            $('#speed').fadeTo(200, 0);
+        }
+        if($(event.target).is('#button3')) {
+            $('#GainR').fadeTo(200, 0);
+        }
+    });
 
     $(".radio").click(function(event) {
         if($(event.target).is('#button1')) {
@@ -62,73 +182,6 @@ window.onload=function() {
             units = "mph";
         }
     });
-    
-    // INTRO MESSAGE \\
-
-    $(".radio").click(function() {
-        $("#introMessage").animate({top: "150px"}, 1000, function(){})
-        .fadeTo(500, 0, function() {
-            $("#introWords").html("enter some gear sizes (at least 1 chainring, 1 sprocket)");
-            $(this).fadeTo(500, 0.6);
-        })
-        .dequeue();
-    });
-
-    var opCount = 0;
-
-    $('#rearGearInputContainer input').change(function() {
-        if ($('#front1').val() != 0||$('#front2').val() != 0||$('#front3').val() != 0) {
-            textChanger(coeff);
-        }
-    });
-
-    var isRearEmpty = true;
-    $('#frontGearInputContainer input').change(function() {
-        if ($('#rear1').val() != "" || $('#rear2').val() != "" || $('#rear3').val() != "" || $('#rear4').val() != "" || $('#rear5').val() != "" || $('#rear6').val() != "" || $('#rear7').val() != "" || $('#rear8').val() != "" || $('#rear9').val() != "" || $('#rear10').val() != "" || $('#rear11').val() != "" || $('#rear12').val() != "") {      // yeah I know... I have to slim this down
-            textChanger(coeff);
-        }
-    });
-
-    // $('#frontGearInputContainer input').change(function() {
-    //     if ($('#rearGearInputContainer input').each(function() {
-    //         if ($(this).val() != "") {
-    //             return true;
-    //         }
-    //     })) {
-    //         textChanger(coeff);
-    //     }
-    // });
-
-    textChanger = function(coeff) {
-         switch (coeff) {
-            case 0:
-                break;
-            case 1:
-                var top = 270;
-                changeTextToCalculate(top);
-                break;
-            case 2:
-                var top = 425;
-                changeTextToCalculate(top);
-                break;
-            case 3: 
-                var top = 370;
-                changeTextToCalculate(top);
-                break;
-        }
-    }
-
-    changeTextToCalculate = function(top) {
-        if (opCount==0) {
-            $("#introMessage").animate({top: top+"px"}, 1000, function(){})
-            .fadeTo(500, 0, function() {
-                $("#introWords").html("when you're ready, hit calculate");
-                $(this).fadeTo(500, 0.6);
-            })
-            .dequeue();
-        }
-        opCount ++;
-    }
 
     // SLIDERS \\
 
@@ -335,7 +388,7 @@ window.onload=function() {
 
     // D3 CHART DISPLAY STUFF \\
 
-    // INITIAL DISPLAY \\
+    // CREATING THE FIRST CHART \\
 
     var chartContW = 380,    // container width
         chartContH = 265;    // container height
@@ -392,12 +445,11 @@ window.onload=function() {
             .attr("transform", "rotate(-90 -15,"+(15+h/2)+")")
             .text(String);    
 
-    // UPDATING \\
+    // UPDATING THE CHART\\
 
     var oldSpacing, spacing;    // for use in the HMTicks function to figure out whether there's been a spacing change
 
     //$("input").change(function() {
-
     updateGraph = function(ratios, rGs) {   
         data = ratios[0];               //updating the data array
         data1 = ratios[1];
@@ -828,6 +880,33 @@ window.onload=function() {
         }
     };
 
+    function HMTicks(numTicks, dRange) {        //HomeMade ticks (No. ticks, data range), makes array of y positions of ticks
+        var allowedSpacings = [0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50];
+        var spacingOptions = Array();
+        var output = {
+            tickY: Array(),    //array of all tick y values
+            log: 0,            //log of whether a scaling change just occured, and whether it was an increase or decrease
+            spacing: 0         //current y tick spacing
+        };
+        for (i=0; i<allowedSpacings.length; i++) {
+            if ((dRange/allowedSpacings[i])>=(numTicks/3) && (dRange/allowedSpacings[i])<=(numTicks)) {
+                spacingOptions.push(allowedSpacings[i]);
+            }
+        }
+        output.spacing = Math.min.apply(null,spacingOptions);        // now we've selected the tick spacing we want
+        if (output.spacing != oldSpacing) {    //spacing changed
+            if (output.spacing<oldSpacing) {output.log = -1;}
+            if (output.spacing>oldSpacing) {output.log = 1;}
+        }
+
+        oldSpacing = output.spacing;
+        
+        for (i=0; i*output.spacing<=dRange; i++) {
+            output.tickY.push(Math.round(100*i*output.spacing)/100);
+        }                             // now we've got an array with all the y values to draw ticks & gridlines at
+        return (output);
+    }
+
 
     // HOVER EFFECT ACROSS TABLE AND CHART \\
 
@@ -894,33 +973,6 @@ window.onload=function() {
                 }
         }
     };
-
-    function HMTicks(numTicks, dRange) {        //HomeMade ticks (No. ticks, data range), makes array of y positions of ticks
-        var allowedSpacings = [0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50];
-        var spacingOptions = Array();
-        var output = {
-            tickY: Array(),    //array of all tick y values
-            log: 0,            //log of whether a scaling change just occured, and whether it was an increase or decrease
-            spacing: 0         //current y tick spacing
-        };
-        for (i=0; i<allowedSpacings.length; i++) {
-            if ((dRange/allowedSpacings[i])>=(numTicks/3) && (dRange/allowedSpacings[i])<=(numTicks)) {
-                spacingOptions.push(allowedSpacings[i]);
-            }
-        }
-        output.spacing = Math.min.apply(null,spacingOptions);        // now we've selected the tick spacing we want
-        if (output.spacing != oldSpacing) {    //spacing changed
-            if (output.spacing<oldSpacing) {output.log = -1;}
-            if (output.spacing>oldSpacing) {output.log = 1;}
-        }
-
-        oldSpacing = output.spacing;
-        
-        for (i=0; i*output.spacing<=dRange; i++) {
-            output.tickY.push(Math.round(100*i*output.spacing)/100);
-        }                             // now we've got an array with all the y values to draw ticks & gridlines at
-        return (output);
-    }
 
     //SAVING, AND DELETING SAVES\\
 

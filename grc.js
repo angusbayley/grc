@@ -34,6 +34,23 @@ window.onload=function() {
         $('#helpDropdown').fadeTo(200, 0);
     });
 
+    var faded = false;
+
+    $('#what').click(function() {
+        $('#entireWrapper').fadeTo(400, 0.3);
+        $('#about').css("z-index", 4).fadeTo(400, 0.9, function() {
+            faded = true;
+        });
+    });
+
+    $('#entireWrapper').click(function () {
+        if (faded) {
+            $('#about').fadeTo(400, 0).css("z-index", -1);
+            $('#entireWrapper').fadeTo(400, 1);
+            faded = false;
+        }
+    })
+
 
     // INTRO MESSAGE \\
 
@@ -1040,7 +1057,6 @@ window.onload=function() {
         $('#newStack').find("text").removeAttr("onmouseover");
         $('#newStack').find("td").removeAttr("onmouseover");
         $('#newStack').find("h3").after("<span class='fa fa-times fa-lg'></span>");
-        //$('#newStack').find("h3").after("<span class='hi'>hello</span>");
         $('#newStack').fadeTo(300, 0.65, function() {
             $('#newStack').animate({marginLeft: 7}, 1000, function() {
                  $('#newStack').removeAttr("id");

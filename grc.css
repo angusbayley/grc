@@ -20,6 +20,10 @@ body {
     height: 100%;
 }
 
+#entireWrapper {
+    height: 100%;
+}
+
 .stack {
     vertical-align: top;
     display: inline-block;
@@ -572,4 +576,15 @@ input {
 
 #footer a {
     text-decoration: none;
+}
+
+#about {
+    position: absolute;
+    background-color: white;
+    width: 400px;
+    height: 400px;
+    top: 100px;
+    left: 400px;
+    z-index: -1;
+    opacity: 0;
 }

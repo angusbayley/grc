@@ -161,6 +161,7 @@ window.onload=function() {
     });
 
     $(".radio").click(function(event) {
+        $('.radio').css("border", "1px solid #dcdcdc");
         if($(event.target).is('#button1')) {
             $('.radio').removeClass('selected');
             $(this).addClass('selected');
@@ -203,6 +204,16 @@ window.onload=function() {
             $('.radio2').removeClass('selected');
             $(this).addClass('selected');
             units = "mph";
+        }
+    });
+
+    $('input').change(function() {
+        if (frontCheck()) {
+            console.log("front ok");
+            $('#frontGearInputContainer input').css("border", "1px solid #ccc");
+        }
+        if (rearCheck()) {
+            $('#rearGearInputContainer input').css("border", "1px solid #ccc");
         }
     });
 
@@ -251,10 +262,8 @@ window.onload=function() {
 
     var tempFronts = [];
 
-    //Copy & paste from this line onwards in George's version:
     $( "#calculateThis" ).click(function(){
-        if (frontCheck() && rearCheck()) {
-            $('input').css("border", "1px solid #ccc")
+        if (frontCheck() && rearCheck() && coeff != 0) {
             if ($('#introMessage').length) {
                 $('#introMessage').fadeTo(100,0, function() {
                     $(this).remove();
@@ -312,6 +321,9 @@ window.onload=function() {
             }
             if (!frontCheck()) {
                 $('#frontGearInputContainer input').css("border", "1px solid #FF6666");
+            }
+            if (coeff == 0) {
+                $('.radio').css("border", "1px solid #FF6666");
             }
         }
     });

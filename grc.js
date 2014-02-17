@@ -74,6 +74,10 @@ window.onload=function() {
     }
 
     rearCheck = function () {
+        // var vals = $('rearGearInputContainer input').map(function() {
+        //     return $(this).val();
+        // });
+        // for (i=0; i<vals.length; i++) {}
         if ($('#rear1').val() != "" || $('#rear2').val() != "" || $('#rear3').val() != "" || $('#rear4').val() != "" || $('#rear5').val() != "" || $('#rear6').val() != "" || $('#rear7').val() != "" || $('#rear8').val() != "" || $('#rear9').val() != "" || $('#rear10').val() != "" || $('#rear11').val() != "" || $('#rear12').val() != "") {
             return true;
         }
@@ -127,18 +131,20 @@ window.onload=function() {
     var coeff = 0;
 
     $(".radio").mouseenter(function(event) {
-        //$('#explnContainer')
         if($(event.target).is('#button1')) {
-            $('#GearR').css("z-index", 3);
-            $('#GearR').fadeTo(100, 1);
+            // var op = 1;
+            // console.log(op + "before");
+            $('#GearR').css("z-index", 3).fadeTo(100, 1);;
+            // $('#GearR').mouseleave(function() {
+            //     op = 0;
+            //     console.log(op + "mouseleave");
+            // });
         }
         if($(event.target).is('#button2')) {
-            $('#speed').css("z-index", 3);
-            $('#speed').fadeTo(100, 1);
+            $('#speed').css("z-index", 3).fadeTo(100, 1);
         }
         if($(event.target).is('#button3')) {
-            $('#GainR').css("z-index", 3);
-            $('#GainR').fadeTo(100, 1);
+            $('#GainR').css("z-index", 3).fadeTo(100, 1);
         }
     });
     $(".radio").mouseleave(function(event) {
@@ -280,9 +286,11 @@ window.onload=function() {
             var tempFront1 = $("#front2").val();
             var tempFront2 = $("#front3").val();
             tempFronts = [tempFront2, tempFront1, tempFront0];
-            tempFronts.sort();
+            console.log(tempFronts);
+            tempFronts.sort(function(a,b) {return (a-b)});
             if (!tempFronts[0]) {tempFronts.push(tempFronts.shift());}      // later we'll need the zero elements at the end of the array
             if (!tempFronts[0]) {tempFronts.push(tempFronts.shift());}
+            console.log(tempFronts);
             front[0] = tempFronts[0];
             front[1] = tempFronts[1];
             front[2] = tempFronts[2];

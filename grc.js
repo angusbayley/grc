@@ -52,7 +52,7 @@ window.onload=function() {
 
     $('#rearGearInputContainer input').change(function() {
         if (walkthrough == true) {
-            if ($('#front1').val() != 0||$('#front2').val() != 0||$('#front3').val() != 0) {
+            if (frontCheck()) {
                 textChanger(coeff);
             }
         }
@@ -60,11 +60,25 @@ window.onload=function() {
 
     $('#frontGearInputContainer input').change(function() {
         if (walkthrough == true) {
-            if ($('#rear1').val() != "" || $('#rear2').val() != "" || $('#rear3').val() != "" || $('#rear4').val() != "" || $('#rear5').val() != "" || $('#rear6').val() != "" || $('#rear7').val() != "" || $('#rear8').val() != "" || $('#rear9').val() != "" || $('#rear10').val() != "" || $('#rear11').val() != "" || $('#rear12').val() != "") {      // yeah I know... I have to slim this down
+            if (rearCheck()) {
                 textChanger(coeff);
             }
         }
     });
+
+    frontCheck = function() {
+        if ($('#front1').val() != 0||$('#front2').val() != 0||$('#front3').val() != 0) {
+            return true;
+        }
+        else {return false;}
+    }
+
+    rearCheck = function () {
+        if ($('#rear1').val() != "" || $('#rear2').val() != "" || $('#rear3').val() != "" || $('#rear4').val() != "" || $('#rear5').val() != "" || $('#rear6').val() != "" || $('#rear7').val() != "" || $('#rear8').val() != "" || $('#rear9').val() != "" || $('#rear10').val() != "" || $('#rear11').val() != "" || $('#rear12').val() != "") {
+            return true;
+        }
+        else {return false;}
+    }
 
     // $('#frontGearInputContainer input').change(function() {
     //     if ($('#rearGearInputContainer input').each(function() {
@@ -115,25 +129,34 @@ window.onload=function() {
     $(".radio").mouseenter(function(event) {
         //$('#explnContainer')
         if($(event.target).is('#button1')) {
-            console.log("hoverrr");
-            $('#GearR').fadeTo(200, 1);
+            $('#GearR').css("z-index", 3);
+            $('#GearR').fadeTo(100, 1);
         }
         if($(event.target).is('#button2')) {
-            $('#speed').fadeTo(200, 1);
+            $('#speed').css("z-index", 3);
+            $('#speed').fadeTo(100, 1);
         }
         if($(event.target).is('#button3')) {
-            $('#GainR').fadeTo(200, 1);
+            $('#GainR').css("z-index", 3);
+            $('#GainR').fadeTo(100, 1);
         }
     });
     $(".radio").mouseleave(function(event) {
         if($(event.target).is('#button1')) {
-            $('#GearR').fadeTo(200, 0);
+            $('#GearR').fadeTo(100, 0, function() {
+                $('#GearR').css("z-index", 0);
+            });
         }
         if($(event.target).is('#button2')) {
-            $('#speed').fadeTo(200, 0);
+            $('#speed').fadeTo(100, 0, function() {
+                $('#speed').css("z-index", 0);    
+            });
         }
         if($(event.target).is('#button3')) {
-            $('#GainR').fadeTo(200, 0);
+            $('#GainR').fadeTo(100, 0, function() {
+                $('#GainR').css("z-index", 0);    
+            });
+            
         }
     });
 
@@ -210,7 +233,7 @@ window.onload=function() {
             value: rpm,
             step: 1,
             min: 50,
-            max: 150,
+            max: 200,
             slide: function( event, ui ) {
                 $( "#rpm" ).val( ui.value + " rpm" );
                 rpm = ui.value;
@@ -230,56 +253,67 @@ window.onload=function() {
 
     //Copy & paste from this line onwards in George's version:
     $( "#calculateThis" ).click(function(){
-        if ($('#introMessage').length) {
-            $('#introMessage').fadeTo(100,0, function() {
-                $(this).remove();
+        if (frontCheck() && rearCheck()) {
+            $('input').css("border", "1px solid #ccc")
+            if ($('#introMessage').length) {
+                $('#introMessage').fadeTo(100,0, function() {
+                    $(this).remove();
+                    $('#resultsStack').fadeTo(300,0.9);
+                });
+            }
+            else {
                 $('#resultsStack').fadeTo(300,0.9);
-            });
+            }
+            var frontGears = [];                           // creates empty arrays for final front and back gears
+            var rearGears = [];
+            var front = [];                                // creates empty array to fill with values from inputs
+            var tempFront0 = $("#front1").val();                 // inserts values from inputs into array
+            var tempFront1 = $("#front2").val();
+            var tempFront2 = $("#front3").val();
+            tempFronts = [tempFront2, tempFront1, tempFront0];
+            tempFronts.sort();
+            if (!tempFronts[0]) {tempFronts.push(tempFronts.shift());}      // later we'll need the zero elements at the end of the array
+            if (!tempFronts[0]) {tempFronts.push(tempFronts.shift());}
+            front[0] = tempFronts[0];
+            front[1] = tempFronts[1];
+            front[2] = tempFronts[2];
+            var rear = [];                                 // same process for rear gears
+            rear[0] = $("#rear1").val();
+            rear[1] = $("#rear2").val();
+            rear[2] = $("#rear3").val();
+            rear[3] = $("#rear4").val();
+            rear[4] = $("#rear5").val();
+            rear[5] = $("#rear6").val();
+            rear[6] = $("#rear7").val();
+            rear[7] = $("#rear8").val();
+            rear[8] = $("#rear9").val();
+            rear[9] = $("#rear10").val();
+            rear[10] = $("#rear11").val();
+            rear[11] = $("#rear12").val();
+            for (i=0; i<front.length; i++){                // puts non-zero values from front into frontGears
+                if(front[i] > 0){                          
+                    frontGears.push(front[i]);
+                }
+            }
+            for (i=0; i<rear.length; i++){                // repeat for rearGears
+                if(rear[i] > 0){
+                    rearGears.push(rear[i]);
+                }
+            }
+            var result = fullCalc(frontGears,rearGears);  // calls fullCalc for ratios of frontGears and rearGears
+            $("#result").html(result);                    // updates the html
+            var ratios = result;                          // takes calculated ratios and uses them for tableCreate
+            var resultsTable = tableCreate(frontGears,rearGears,ratios); // calls tableCreate
+            updateGraph(ratios, rearGears);
         }
         else {
-            $('#resultsStack').fadeTo(300,0.9);
-        }
-        var frontGears = [];                           // creates empty arrays for final front and back gears
-        var rearGears = [];
-        var front = [];                                // creates empty array to fill with values from inputs
-        var tempFront0 = $("#front1").val();                 // inserts values from inputs into array
-        var tempFront1 = $("#front2").val();
-        var tempFront2 = $("#front3").val();
-        tempFronts = [tempFront2, tempFront1, tempFront0];
-        tempFronts.sort();
-        if (!tempFronts[0]) {tempFronts.push(tempFronts.shift());}      // later we'll need the zero elements at the end of the array
-        if (!tempFronts[0]) {tempFronts.push(tempFronts.shift());}
-        front[0] = tempFronts[0];
-        front[1] = tempFronts[1];
-        front[2] = tempFronts[2];
-        var rear = [];                                 // same process for rear gears
-        rear[0] = $("#rear1").val();
-        rear[1] = $("#rear2").val();
-        rear[2] = $("#rear3").val();
-        rear[3] = $("#rear4").val();
-        rear[4] = $("#rear5").val();
-        rear[5] = $("#rear6").val();
-        rear[6] = $("#rear7").val();
-        rear[7] = $("#rear8").val();
-        rear[8] = $("#rear9").val();
-        rear[9] = $("#rear10").val();
-        rear[10] = $("#rear11").val();
-        rear[11] = $("#rear12").val();
-        for (i=0; i<front.length; i++){                // puts non-zero values from front into frontGears
-            if(front[i] > 0){                          
-                frontGears.push(front[i]);
+            if (!rearCheck()) {
+                $('#rearGearInputContainer input').css("border", "1px solid #FF6666");
+            }
+            if (!frontCheck()) {
+                $('#frontGearInputContainer input').css("border", "1px solid #FF6666");
             }
         }
-        for (i=0; i<rear.length; i++){                // repeat for rearGears
-            if(rear[i] > 0){
-                rearGears.push(rear[i]);
-            }
-        }
-        var result = fullCalc(frontGears,rearGears);  // calls fullCalc for ratios of frontGears and rearGears
-        $("#result").html(result);                    // updates the html
-        var ratios = result;                          // takes calculated ratios and uses them for tableCreate
-        var resultsTable = tableCreate(frontGears,rearGears,ratios); // calls tableCreate
-        updateGraph(ratios, rearGears);
     });
 
     // CALCULATIONS \\

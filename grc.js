@@ -56,7 +56,7 @@ window.onload=function() {
 
     $(".radio").click(function() {
         if (walkthrough == true) {
-            $("#introMessage").animate({top: "180px"}, 1000, function(){})
+            $("#introMessage").animate({top: "178px"}, 1000, function(){})
             .fadeTo(500, 0, function() {
                 $("#introWords").html("enter some gear sizes (at least 1 chainring, 1 sprocket)");
                 $(this).fadeTo(500, 0.6);
@@ -116,15 +116,15 @@ window.onload=function() {
             case 0:
                 break;
             case 1:
-                var top = 260;
+                var top = 257;
                 changeTextToCalculate(top);
                 break;
             case 2:
-                var top = 415;
+                var top = 412;
                 changeTextToCalculate(top);
                 break;
             case 3: 
-                var top = 360;
+                var top = 357;
                 changeTextToCalculate(top);
                 break;
         }

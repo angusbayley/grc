@@ -43,14 +43,23 @@ window.onload=function() {
         });
     });
 
-    $('#entireWrapper').click(function () {
-        if (faded) {
-            $('#about').fadeTo(400, 0).css("z-index", -1);
-            $('#entireWrapper').fadeTo(400, 1);
-            faded = false;
-        }
+    $('#aboutText span').click(function() {
+        exitAbout(faded);
+        walkthrough = true;
+        $('#introMessage').delay(500).fadeTo(300, 0.6);        
     })
 
+    $('#entireWrapper').click(function () {
+        exitAbout(faded);
+    })
+
+    function exitAbout(faded) {
+            if (faded) {
+                $('#about').fadeTo(400, 0).css("z-index", -1);
+                $('#entireWrapper').fadeTo(400, 1);
+            faded = false;
+        }
+    }
 
     // INTRO MESSAGE \\
 
@@ -58,11 +67,28 @@ window.onload=function() {
         if (walkthrough == true) {
             $("#introMessage").animate({top: "178px"}, 1000, function(){})
             .fadeTo(500, 0, function() {
-                $("#introWords").html("enter some gear sizes (at least 1 chainring, 1 sprocket)");
+                $("#introWords").html("enter some gear sizes <span id='exampleGears'>Example</span>");
                 $(this).fadeTo(500, 0.6);
             })
             .dequeue();
         }
+    });
+
+    $("#introWords").on('click', '#exampleGears', function() {
+        console.log("clicked");
+        $('#front1').val(25);
+        $('#front2').val(32);
+        $('#front3').val(39);
+        $('#rear1').val(9);
+        $('#rear2').val(10);
+        $('#rear3').val(11);
+        $('#rear4').val(12);
+        $('#rear5').val(13);
+        $('#rear6').val(14);
+        $('#rear7').val(16);
+        $('#rear8').val(18);
+        $('#rear9').val(20);
+        textChanger(coeff);
     });
 
     var opCount = 0;

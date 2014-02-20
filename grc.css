@@ -292,6 +292,23 @@ input {
     font-size: 2em;
 }
 
+#introWords span {
+    background-color: steelblue;
+    border: 1px solid steelblue; /*#386890*/
+    border-radius: 15px;
+    cursor: pointer;
+    color: white;
+    font-size: 0.6em;
+    padding: 4.5px;
+    position: relative;
+    top: -4px;
+    left: 2px;
+}
+
+#introWords span:hover {
+    background-color: #386890
+}
+
 #stacks {
     display: inline-block;
     width: 100%;
@@ -582,9 +599,30 @@ input {
     position: absolute;
     background-color: white;
     width: 400px;
-    height: 400px;
     top: 100px;
     left: 400px;
     z-index: -1;
     opacity: 0;
+    white-space: normal;
+}
+#aboutText {
+    /*overflow: auto;*/
+    width: 380px;
+    padding: 15px;
+/*    word-break: break-all; 
+    word-wrap: break-word;*/
+}
+
+#aboutText span {
+    color: steelblue;
+    cursor: pointer;
+}
+
+#aboutText a {
+    text-decoration: none;
+    color: steelblue;
+}
+
+h2 {
+    margin-top: 5px;
 }

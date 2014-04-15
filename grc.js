@@ -20,15 +20,9 @@ window.onload=function() {
 
     // HELP STUFF \\
 
-    var walkthrough = false;
-    $('#walkthrough').click(function() {
-        walkthrough = true;
-        $('#introMessage').fadeTo(300, 0.6);
-    })
+    var walkthrough = true;
 
-    $('.fa-question-circle').mouseenter(function() {
-        $('#helpDropdown').fadeTo(200, 1);
-    });
+    $('#introMessage').delay(1000).fadeTo(300, 0.6);
 
     $('#mouseCapture').mouseleave(function() {
         $('#helpDropdown').fadeTo(200, 0);
@@ -36,28 +30,34 @@ window.onload=function() {
 
     var faded = false;
 
-    $('#what').click(function() {
+    $('.fa-question-circle').click(function() {
+        console.log(faded);
         $('#entireWrapper').fadeTo(400, 0.3);
         $('#about').css("z-index", 4).fadeTo(400, 0.9, function() {
+        //    setTimeout("faded = true; console.log('set to true')", 50);
             faded = true;
         });
+        console.log(faded);
     });
 
-    $('#aboutText span').click(function() {
+    $('#aboutText span').click(function(faded) {
         exitAbout(faded);
         walkthrough = true;
         $('#introMessage').delay(500).fadeTo(300, 0.6);        
-    })
+    });
 
     $('#entireWrapper').click(function () {
-        exitAbout(faded);
-    })
+        console.log("clicked, faded = " + faded);
+        exitAbout();
+        //faded = false;
+    });
 
-    function exitAbout(faded) {
-            if (faded) {
-                $('#about').fadeTo(400, 0).css("z-index", -1);
-                $('#entireWrapper').fadeTo(400, 1);
+    function exitAbout() {
+        if (faded) {
+            $('#about').fadeTo(400, 0).css("z-index", -1);
+            $('#entireWrapper').fadeTo(400, 1);
             faded = false;
+            console.log("faded set to false");
         }
     }
 
@@ -117,25 +117,11 @@ window.onload=function() {
     }
 
     rearCheck = function () {
-        // var vals = $('rearGearInputContainer input').map(function() {
-        //     return $(this).val();
-        // });
-        // for (i=0; i<vals.length; i++) {}
         if ($('#rear1').val() != "" || $('#rear2').val() != "" || $('#rear3').val() != "" || $('#rear4').val() != "" || $('#rear5').val() != "" || $('#rear6').val() != "" || $('#rear7').val() != "" || $('#rear8').val() != "" || $('#rear9').val() != "" || $('#rear10').val() != "" || $('#rear11').val() != "" || $('#rear12').val() != "") {
             return true;
         }
         else {return false;}
     }
-
-    // $('#frontGearInputContainer input').change(function() {
-    //     if ($('#rearGearInputContainer input').each(function() {
-    //         if ($(this).val() != "") {
-    //             return true;
-    //         }
-    //     })) {
-    //         textChanger(coeff);
-    //     }
-    // });
 
     textChanger = function(coeff) {
          switch (coeff) {
@@ -175,13 +161,7 @@ window.onload=function() {
 
     $(".radio").mouseenter(function(event) {
         if($(event.target).is('#button1')) {
-            // var op = 1;
-            // console.log(op + "before");
-            $('#GearR').css("z-index", 3).fadeTo(100, 1);;
-            // $('#GearR').mouseleave(function() {
-            //     op = 0;
-            //     console.log(op + "mouseleave");
-            // });
+            $('#GearR').css("z-index", 3).fadeTo(100, 1);
         }
         if($(event.target).is('#button2')) {
             $('#speed').css("z-index", 3).fadeTo(100, 1);
@@ -285,7 +265,7 @@ window.onload=function() {
         $( "#crankLength" ).val($( "#crankLengthSlider" ).slider( "value" ) + "mm" );
     });
 
-    var rpm = 60;
+    var rpm = 100;
 
     $(function() {
         $( "#rpmSlider" ).slider({
